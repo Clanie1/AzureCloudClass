@@ -1,0 +1,11 @@
+/Users/barocio/RiderProjects/WebApplication1/Entities/bin/Debug/net8.0/Entities.deps.json
+/Users/barocio/RiderProjects/WebApplication1/Entities/bin/Debug/net8.0/Entities.dll
+/Users/barocio/RiderProjects/WebApplication1/Entities/bin/Debug/net8.0/Entities.pdb
+/Users/barocio/RiderProjects/WebApplication1/Entities/obj/Debug/net8.0/Entities.GeneratedMSBuildEditorConfig.editorconfig
+/Users/barocio/RiderProjects/WebApplication1/Entities/obj/Debug/net8.0/Entities.AssemblyInfoInputs.cache
+/Users/barocio/RiderProjects/WebApplication1/Entities/obj/Debug/net8.0/Entities.AssemblyInfo.cs
+/Users/barocio/RiderProjects/WebApplication1/Entities/obj/Debug/net8.0/Entities.csproj.CoreCompileInputs.cache
+/Users/barocio/RiderProjects/WebApplication1/Entities/obj/Debug/net8.0/Entities.dll
+/Users/barocio/RiderProjects/WebApplication1/Entities/obj/Debug/net8.0/refint/Entities.dll
+/Users/barocio/RiderProjects/WebApplication1/Entities/obj/Debug/net8.0/Entities.pdb
+/Users/barocio/RiderProjects/WebApplication1/Entities/obj/Debug/net8.0/ref/Entities.dll
