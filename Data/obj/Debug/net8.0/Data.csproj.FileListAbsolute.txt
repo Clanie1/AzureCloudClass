@@ -15,3 +15,4 @@
 /Users/barocio/RiderProjects/WebApplication1/Data/obj/Debug/net8.0/Data.pdb
 /Users/barocio/RiderProjects/WebApplication1/Data/obj/Debug/net8.0/Data.genruntimeconfig.cache
 /Users/barocio/RiderProjects/WebApplication1/Data/obj/Debug/net8.0/ref/Data.dll
+/Users/barocio/RiderProjects/WebApplication1/Data/obj/Debug/net8.0/Data.sourcelink.json
