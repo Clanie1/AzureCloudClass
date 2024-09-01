@@ -1,5 +1,7 @@
 using System.Configuration;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
+using WebApplication1.entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<StudentDbContext>(options => options.UseSqlServer(connectionString));
+
 
 var app = builder.Build();
 
@@ -16,7 +22,6 @@ var app = builder.Build();
     app.UseSwagger();
     app.UseSwaggerUI();
 // }
-
 app.UseHttpsRedirection();
 
 var summaries = new[]
@@ -24,20 +29,61 @@ var summaries = new[]
     "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
 };
 
-app.MapGet("/weatherforecast", () =>
+app.MapGet("/students", async (StudentDbContext db) =>
     {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
+        return await db.Student.ToListAsync();
     })
-    .WithName("GetWeatherForecast")
+    .WithName("GetStudents")
     .WithOpenApi();
+
+app.MapPost("/students", async (StudentDbContext db, Student student) =>
+    {
+        db.Student.Add(student);
+        await db.SaveChangesAsync();
+        return Results.Ok(student);
+    })
+    .WithName("AddStudent")
+    .WithOpenApi();
+
+app.MapDelete("/students", async (StudentDbContext db, int studentId) =>
+    {
+        var student = await db.Student.FindAsync(studentId);
+        db.Student.Remove(student);       
+        await db.SaveChangesAsync();
+        return Results.Ok(student);
+    })
+    .WithName("RemoveStudent")
+    .WithOpenApi();
+
+app.MapPut("/students", async (StudentDbContext db, int studentId, Student updatedStudent) =>
+    {
+        if (studentId != updatedStudent.Student_id)
+        {
+            return Results.BadRequest("Product ID mismatch");
+        }
+
+        var existingProduct = await db.Student.FindAsync(studentId);
+        if (existingProduct == null)
+        {
+            return Results.NotFound();
+        }
+
+        existingProduct.Fullname = updatedStudent.Fullname;
+
+        try
+        {
+            await db.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        { 
+            return Results.NotFound();
+        }
+
+        return Results.NoContent();
+    })
+    .WithName("EditStudent")
+    .WithOpenApi();
+
 
 var configuration = builder.Configuration
     .AddJsonFile("appsettings.json")
